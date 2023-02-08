@@ -5,18 +5,17 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  StatusBar,
-  Dimensions,
+  StatusBar,Dimensions
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Calendar} from 'react-native-calendars';
 import moment from 'moment';
-import {sc, vsc} from '../appConstants/Utils';
+import { sc } from '../appConstants/Utils';
 
-const Aboutus = ({navigation}) => {
+const Feedback = ({navigation}) => {
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
-      <TouchableOpacity
+            <TouchableOpacity
         onPress={() => {
           navigation.openDrawer();
         }}
@@ -38,6 +37,7 @@ const Aboutus = ({navigation}) => {
           style={{width: 20, height: 20, tintColor: '#FFFFFF'}}
         />
       </TouchableOpacity>
+
       <StatusBar backgroundColor="#FF851B" />
       <View
         style={{
@@ -47,14 +47,15 @@ const Aboutus = ({navigation}) => {
           flexDirection: 'row',
           paddingVertical: 15,
         }}>
-        <View style={{marginLeft: 20}}>
+        <View
+          style={{marginLeft: 20}}>
           <Image
             source={require('../Assets/menu.png')}
             style={{width: 20, opacity: 0, height: 20, tintColor: '#FFFFFF'}}
           />
         </View>
         <View>
-          <Text style={{color: '#FFFFFF', fontSize: 18}}>About Us</Text>
+          <Text style={{color: '#FFFFFF', fontSize: 18}}>Feedback</Text>
         </View>
         <View>
           <Image
@@ -80,4 +81,4 @@ const Aboutus = ({navigation}) => {
   );
 };
 
-export default Aboutus;
+export default Feedback;

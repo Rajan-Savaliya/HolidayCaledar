@@ -7,6 +7,7 @@ import {View} from 'react-native';
 
 import Home from '../Screen/Home';
 import Aboutus from '../Screen/Aboutus';
+import TabNavigation from './TabNavigation';
 
 const Stack = createStackNavigator();
 
@@ -23,21 +24,21 @@ const AppNavigation = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={TabNavigation}
           options={{
             headerShown: false,
             cardStyleInterpolator: NavigationAnimationType,
           }}
         />
 
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Aboutus"
           component={Aboutus}
           options={{
             headerShown: false,
             cardStyleInterpolator: NavigationAnimationType,
           }}
-        />
+        /> */}
       </Stack.Navigator>
     </View>
   );

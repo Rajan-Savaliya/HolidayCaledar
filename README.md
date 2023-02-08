@@ -14,3 +14,10 @@ What is the two-letter country code for this unit?
   [Unknown]:  IN 
 Is CN=rajan savaliya, OU=raging developer, O=raging developer, L=surat, ST=gujarat, C=IN correct?
   [no]:  yes
+
+./gradlew assembleRelease -x bundleReleaseJsAndAssets
+
+
+-Issue te resolved
+-no network hanlder and toast message
+-onRefresh handler to resh and call again api

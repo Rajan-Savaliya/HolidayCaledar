@@ -6,6 +6,8 @@ import {
   Image,
   ScrollView,
   StatusBar,
+  ToastAndroid,
+  Dimensions,
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import {Calendar} from 'react-native-calendars';
@@ -13,6 +15,7 @@ import moment from 'moment';
 import {Dropdown} from 'react-native-element-dropdown';
 import {sc, vsc} from '../appConstants/Utils';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Toast from 'react-native-toast-message';
 
 const Home = ({navigation}) => {
   const [renderCalendarTitle, setRenderCalendarTitle] = useState('');
@@ -65,7 +68,16 @@ const Home = ({navigation}) => {
         });
         setStateList(updateTempList);
       })
-      .catch(error => console.log('error', error));
+      .catch(error => {
+        alert(error.message);
+        Toast.show({
+          text1: error?.message ? error.message : '',
+          visibilityTime: 3000,
+          autoHide: true,
+          position: 'bottom',
+          type: 'error',
+        });
+      });
   };
 
   const getIndiaHolidayList = () => {
@@ -111,14 +123,14 @@ const Home = ({navigation}) => {
             result?.data && Array.isArray(result?.data) ? result?.data : [],
           );
           let tempObjectList = {};
-          // G- Must holiday - ornage  "#EA4E6F"
-          // R- blue "#2B8ED5"
+          // G- Must holiday - ornage  "#3D9970"
+          // R- blue "#FF851B"
           result?.data.forEach(item => {
             tempObjectList = {
               ...tempObjectList,
               [item.date]: {
                 selected: true,
-                selectedColor: item?.type == 'R' ? '#2B8ED5' : '#EA4E6F',
+                selectedColor: item?.type == 'R' ? '#FF851B' : '#3D9970',
               },
             };
           });
@@ -128,12 +140,36 @@ const Home = ({navigation}) => {
       })
       .catch(error => {
         setLoading(false);
+        alert(error.message);
       });
   };
 
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
-      <StatusBar backgroundColor="#2B8ED5" />
+      <StatusBar backgroundColor="#FF851B" />
+      <TouchableOpacity
+        onPress={() => {
+          navigation.openDrawer();
+        }}
+        style={{
+          position: 'absolute',
+          zIndex: 11,
+          top: Dimensions.get('window').height - sc(165),
+          right: 20,
+          backgroundColor: '#FF851B',
+          width: sc(50),
+          height: sc(50),
+          borderRadius: 100,
+          alignItems: 'center',
+          justifyContent: 'center',
+          elevation: 3,
+        }}>
+        <Image
+          source={require('../Assets/menu.png')}
+          style={{width: 20, height: 20, tintColor: '#FFFFFF'}}
+        />
+      </TouchableOpacity>
+
       <Spinner
         visible={loading}
         textContent={'Loading...'}
@@ -143,22 +179,22 @@ const Home = ({navigation}) => {
 
       <View
         style={{
-          backgroundColor: '#2B8ED5',
+          backgroundColor: '#FF851B',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexDirection: 'row',
           paddingVertical: 15,
         }}>
-        <TouchableOpacity
+        <View
           onPress={() => {
-            navigation.openDrawer();
+            // navigation.openDrawer();
           }}
           style={{marginLeft: 20}}>
           <Image
             source={require('../Assets/menu.png')}
-            style={{width: 20, height: 20, tintColor: '#FFFFFF'}}
+            style={{width: 20, opacity: 0, height: 20, tintColor: '#FFFFFF'}}
           />
-        </TouchableOpacity>
+        </View>
         <View>
           <Text style={{color: '#FFFFFF', fontSize: 18}}>Holiday Calendar</Text>
         </View>
@@ -207,6 +243,11 @@ const Home = ({navigation}) => {
         <Calendar
           // Initially visible month. Default = now
           initialDate={moment().format('YYYY-MM-DD')}
+          theme={{
+            todayTextColor: '#3D9970',
+            arrowColor: 'orange',
+            // disabledArrowColor: '#d9e1e8',
+          }}
           // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
           // minDate={'2012-05-10'}
           // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
@@ -214,6 +255,15 @@ const Home = ({navigation}) => {
           // Handler which gets executed on day press. Default = undefined
           onDayPress={day => {
             console.log('selected day', day);
+            Toast.show({
+              text1: `Selected day : ${moment(day?.timestamp).format(
+                'DD MMMM YYYY',
+              )}`,
+              visibilityTime: 3000,
+              autoHide: true,
+              position: 'top',
+              // type: 'error',
+            });
           }}
           // Handler which gets executed on day long press. Default = undefined
           onDayLongPress={day => {
@@ -231,7 +281,7 @@ const Home = ({navigation}) => {
           // Replace default arrows with custom ones (direction can be 'left' or 'right')
           // renderArrow={direction => <Arrow />}
           // Do not show days of other months in month page. Default = false
-          // hideExtraDays={true}
+          hideExtraDays={true}
           // If hideArrows = false and hideExtraDays = false do not switch month when tapping on greyed out
           // day from another month that is visible in calendar page. Default = false
           // disableMonthChange={true}
@@ -297,7 +347,7 @@ const Home = ({navigation}) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor:
-                          renderDay?.type == 'R' ? '#2B8ED5' : '#EA4E6F',
+                          renderDay?.type == 'R' ? '#FF851B' : '#3D9970',
                         marginLeft: 13,
                       }}>
                       <Text style={{color: '#FFFFFF', textAlign: 'center'}}>

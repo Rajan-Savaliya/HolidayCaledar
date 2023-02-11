@@ -7,6 +7,7 @@ import {
   ScrollView,
   StatusBar,
   Dimensions,
+  Linking,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Calendar} from 'react-native-calendars';
@@ -15,8 +16,9 @@ import {sc, vsc} from '../appConstants/Utils';
 
 const Aboutus = ({navigation}) => {
   return (
-    <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
-      <TouchableOpacity
+    <>
+      <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+        {/* <TouchableOpacity
         onPress={() => {
           navigation.openDrawer();
         }}
@@ -25,7 +27,7 @@ const Aboutus = ({navigation}) => {
           zIndex: 11,
           top: Dimensions.get('window').height - sc(165),
           right: 20,
-          backgroundColor: '#FF851B',
+          backgroundColor: '#2B8ED5',
           width: sc(50),
           height: sc(50),
           borderRadius: 100,
@@ -37,46 +39,131 @@ const Aboutus = ({navigation}) => {
           source={require('../Assets/menu.png')}
           style={{width: 20, height: 20, tintColor: '#FFFFFF'}}
         />
-      </TouchableOpacity>
-      <StatusBar backgroundColor="#FF851B" />
+      </TouchableOpacity> */}
+        <StatusBar backgroundColor="#3d9970" />
+        <ScrollView>
+          <View
+            style={{
+              backgroundColor: '#3d9970',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              paddingVertical: 15,
+            }}>
+            <View style={{marginLeft: 20}}>
+              <Image
+                source={require('../Assets/menu.png')}
+                style={{
+                  width: 20,
+                  opacity: 0,
+                  height: 20,
+                  tintColor: '#FFFFFF',
+                }}
+              />
+            </View>
+            <View>
+              <Text style={{color: '#FFFFFF', fontSize: 18}}>About Us</Text>
+            </View>
+            <View>
+              <Image
+                source={require('../Assets/menu.png')}
+                style={{
+                  opacity: 0,
+                  width: 20,
+                  height: 20,
+                  tintColor: '#FFFFFF',
+                }}
+              />
+            </View>
+          </View>
+          <View style={{marginTop: 20, marginHorizontal: 20}}>
+            <Text
+              style={{
+                marginTop: vsc(20),
+                textAlign: 'center',
+                fontWeight: '500',
+                fontSize: 20,
+                color: '#000000',
+              }}>
+              Holiday Calendar
+            </Text>
+
+            <Text style={{marginTop: sc(30), fontSize: 18}}>AUTHOR</Text>
+            <Text style={{marginTop: sc(5), fontSize: 16, color: '#808080'}}>
+              Raging Developers
+            </Text>
+
+            <Text style={{marginTop: sc(30), fontSize: 18}}>WEBSITE</Text>
+            <Text
+              onPress={() => {
+                Linking.openURL('https://www.ragingdevelopers.com');
+              }}
+              style={{
+                marginTop: sc(5),
+                fontSize: 16,
+                color: '#3d9970',
+                textDecorationLine: 'underline',
+              }}>
+              https://www.ragingdevelopers.com/
+            </Text>
+
+            <Text style={{marginTop: sc(30), fontSize: 18}}>
+              PRIVACY POLICY
+            </Text>
+            <Text
+              onPress={() => {
+                Linking.openURL(
+                  'https://ragingdevelopers.com/privacy_policy/privacy_policy_holiday_calendar',
+                );
+              }}
+              style={{
+                marginTop: sc(5),
+                color: 'green',
+                fontSize: 16,
+                color: '#3d9970',
+                textDecorationLine: 'underline',
+              }}>
+              https://ragingdevelopers.com/privacy_policy/privacy_policy_holiday_calendar
+            </Text>
+
+            <Text style={{marginTop: sc(30), fontSize: 18}}>
+              PRIVACY POLICY
+            </Text>
+            <Text
+              onPress={() => {
+                Linking.openURL('mailto:ragingdevelopers@gmail.com');
+              }}
+              style={{
+                marginTop: sc(5),
+                color: 'green',
+                fontSize: 16,
+                color: '#3d9970',
+              }}>
+              ragingdevelopers@gmail.com
+            </Text>
+          </View>
+        </ScrollView>
+      </View>
       <View
         style={{
-          backgroundColor: '#FF851B',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-          paddingVertical: 15,
+          paddingTop: vsc(10),
+          backgroundColor: '#FFFFFF',
+          paddingHorizontal: sc(20),
+          paddingVertical: vsc(20),
         }}>
-        <View style={{marginLeft: 20}}>
-          <Image
-            source={require('../Assets/menu.png')}
-            style={{width: 20, opacity: 0, height: 20, tintColor: '#FFFFFF'}}
-          />
-        </View>
-        <View>
-          <Text style={{color: '#FFFFFF', fontSize: 18}}>About Us</Text>
-        </View>
-        <View>
-          <Image
-            source={require('../Assets/menu.png')}
-            style={{opacity: 0, width: 20, height: 20, tintColor: '#FFFFFF'}}
-          />
-        </View>
-      </View>
-      <View style={{marginTop: 20, marginHorizontal: 20}}>
-        <Text>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
+        <Text style={{fontWeight: '500', color: '#000000'}}>
+          Note: 'G' (
+          <Text style={{color: '#EA4E6F', fontSize: 14, textAlign: 'center'}}>
+            {'\u2B24'}
+          </Text>
+          ) denotes Gazetted Holiday and 'R' (
+          <Text style={{color: '#2B8ED5', fontSize: 14, textAlign: 'center'}}>
+            {'\u2B24'}
+          </Text>
+          ) denotes Restricted Holiday.
         </Text>
       </View>
-    </View>
+    </>
   );
 };
 

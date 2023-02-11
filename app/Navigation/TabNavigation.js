@@ -18,9 +18,11 @@ const TabNavigation = () => {
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: '#DDDDDD',
+          backgroundColor: '#FFFFFF',
           justifyContent: 'center',
           alignItems: 'center',
+          borderTopWidth: 0.2,
+          borderTopColor: '#3d9970'
         }}>
         {state.routes.map((route, index) => {
           const {options} = descriptors[route.key];
@@ -58,11 +60,11 @@ const TabNavigation = () => {
                     height: vsc(60),
                   }}>
                   <Image
-                    source={require('../Assets/homeicon.png')}
+                    source={require('../Assets/calendar.png')}
                     style={{
                       width: sc(24),
                       height: sc(24),
-                      tintColor: isFocused ? '#FF851B' : '#808080',
+                      tintColor: isFocused ? '#3d9970' : '#808080',
                     }}
                   />
                 </TouchableOpacity>
@@ -83,7 +85,7 @@ const TabNavigation = () => {
                     style={{
                       width: sc(24),
                       height: sc(24),
-                      tintColor: isFocused ? '#FF851B' : '#808080',
+                      tintColor: isFocused ? '#3d9970' : '#808080',
                     }}
                   />
                 </TouchableOpacity>
@@ -104,7 +106,7 @@ const TabNavigation = () => {
                     style={{
                       width: sc(24),
                       height: sc(24),
-                      tintColor: isFocused ? '#FF851B' : '#808080',
+                      tintColor: isFocused ? '#3d9970' : '#808080',
                     }}
                   />
                 </TouchableOpacity>
@@ -126,7 +128,7 @@ const TabNavigation = () => {
                     style={{
                       width: sc(24),
                       height: sc(24),
-                      tintColor: isFocused ? '#FF851B' : '#808080',
+                      tintColor: isFocused ? '#3d9970' : '#808080',
                     }}
                   />
                 </TouchableOpacity>
@@ -149,13 +151,13 @@ const TabNavigation = () => {
         style: {
           position: 'absolute',
           elevation: 0,
-          backgroundColor: '#FF851B',
+          backgroundColor: '#2B8ED5',
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
           height: vsc(60),
-          borderTopWidth: 0,
+          borderTopWidth: 1,
           borderColor: '#808080',
           overflow: 'hidden',
         },

@@ -8,6 +8,7 @@ import {
   StatusBar,
   ToastAndroid,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import {Calendar} from 'react-native-calendars';
@@ -22,6 +23,12 @@ const Home = ({navigation}) => {
   const [markDateList, setMarkDateList] = useState({});
   const [daysRenderList, setDaysRenderList] = useState([]);
   const [stateList, setStateList] = useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getIndiaHolidayList();
+  }, []);
+
   const [selectedState, setSelectedState] = useState({
     value: 0,
     label: 'India',
@@ -69,7 +76,6 @@ const Home = ({navigation}) => {
         setStateList(updateTempList);
       })
       .catch(error => {
-        alert(error.message);
         Toast.show({
           text1: error?.message ? error.message : '',
           visibilityTime: 3000,
@@ -117,20 +123,22 @@ const Home = ({navigation}) => {
     )
       .then(response => response.json())
       .then(result => {
+        setRefreshing(false);
+
         setLoading(false);
         if (result.success) {
           setDaysRenderList(
             result?.data && Array.isArray(result?.data) ? result?.data : [],
           );
           let tempObjectList = {};
-          // G- Must holiday - ornage  "#3D9970"
-          // R- blue "#FF851B"
+          // G- Must holiday - ornage  "#EA4E6F"
+          // R- blue "#2B8ED5"
           result?.data.forEach(item => {
             tempObjectList = {
               ...tempObjectList,
               [item.date]: {
                 selected: true,
-                selectedColor: item?.type == 'R' ? '#FF851B' : '#3D9970',
+                selectedColor: item?.type == 'R' ? '#2B8ED5' : '#EA4E6F',
               },
             };
           });
@@ -139,15 +147,23 @@ const Home = ({navigation}) => {
         }
       })
       .catch(error => {
+        setRefreshing(false);
+
         setLoading(false);
-        alert(error.message);
+        Toast.show({
+          text1: error?.message ? error.message : '',
+          visibilityTime: 3000,
+          autoHide: true,
+          position: 'bottom',
+          type: 'error',
+        });
       });
   };
 
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
-      <StatusBar backgroundColor="#FF851B" />
-      <TouchableOpacity
+      <StatusBar backgroundColor="#3d9970" />
+      {/* <TouchableOpacity
         onPress={() => {
           navigation.openDrawer();
         }}
@@ -156,7 +172,7 @@ const Home = ({navigation}) => {
           zIndex: 11,
           top: Dimensions.get('window').height - sc(165),
           right: 20,
-          backgroundColor: '#FF851B',
+          backgroundColor: '#2B8ED5',
           width: sc(50),
           height: sc(50),
           borderRadius: 100,
@@ -168,7 +184,7 @@ const Home = ({navigation}) => {
           source={require('../Assets/menu.png')}
           style={{width: 20, height: 20, tintColor: '#FFFFFF'}}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <Spinner
         visible={loading}
@@ -179,7 +195,7 @@ const Home = ({navigation}) => {
 
       <View
         style={{
-          backgroundColor: '#FF851B',
+          backgroundColor: '#3d9970',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexDirection: 'row',
@@ -215,6 +231,8 @@ const Home = ({navigation}) => {
           marginTop: vsc(10),
           paddingVertical: vsc(5),
           paddingHorizontal: sc(10),
+          backgroundColor: '#FFFFFF',
+          marginBottom: sc(10),
         }}
         placeholderStyle={{}}
         selectedTextStyle={{}}
@@ -239,13 +257,36 @@ const Home = ({navigation}) => {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        containerStyle={{paddingBottom: sc(20)}}>
+        containerStyle={{paddingBottom: sc(20)}}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <Calendar
           // Initially visible month. Default = now
           initialDate={moment().format('YYYY-MM-DD')}
           theme={{
-            todayTextColor: '#3D9970',
-            arrowColor: 'orange',
+            todayTextColor: '#3d9970',
+            arrowColor: '#3d9970',
+            // backgroundColor: '#FFFFFF',
+            // calendarBackground: '#FFFFFF',
+            // textSectionTitleColor: '#FFFFFF',
+            // textSectionTitleDisabledColor: '#3d9970',
+            // selectedDayBackgroundColor: '#00adf5',
+            // selectedDayTextColor: '#FFFFFF',
+            // dayTextColor: '#3d9970',
+            // textDisabledColor: '#3d9970',
+            // dotColor: '#00adf5',
+            // selectedDotColor: '#ffffff',
+            // disabledArrowColor: '#3d9970',
+            monthTextColor: 'blue',
+            indicatorColor: 'blue',
+            textDayFontWeight: '300',
+            textMonthFontWeight: 'bold',
+            textDayHeaderFontWeight: '300',
+            textDayFontSize: 16,
+            textMonthFontSize: 16,
+            textDayHeaderFontSize: 16,
+
             // disabledArrowColor: '#d9e1e8',
           }}
           // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
@@ -255,10 +296,18 @@ const Home = ({navigation}) => {
           // Handler which gets executed on day press. Default = undefined
           onDayPress={day => {
             console.log('selected day', day);
+            let tempDateFind = daysRenderList.find(
+              dateItem =>
+                moment(dateItem?.date).format('DD MMMM YYYY') ===
+                moment(day?.timestamp).format('DD MMMM YYYY'),
+            )
+            let showFestivalText = tempDateFind?.name ?? "";
+
             Toast.show({
               text1: `Selected day : ${moment(day?.timestamp).format(
                 'DD MMMM YYYY',
               )}`,
+              text2: showFestivalText,
               visibilityTime: 3000,
               autoHide: true,
               position: 'top',
@@ -330,13 +379,13 @@ const Home = ({navigation}) => {
                       flexDirection: 'row',
                       alignItems: 'center',
                       marginBottom: 10,
-                      borderColor: '#dddddd',
-                      borderWidth: 1,
+                      borderColor: '#3d9970',
+                      borderWidth: 1.5,
                       paddingVertical: 5,
                       marginHorizontal: 10,
                       borderRadius: 10,
                       shadowColor: '#FFFFFF',
-                      elevation: 1,
+                      // elevation: 1,
                     }}
                     key={index}>
                     <View
@@ -347,7 +396,7 @@ const Home = ({navigation}) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor:
-                          renderDay?.type == 'R' ? '#FF851B' : '#3D9970',
+                          renderDay?.type == 'R' ? '#2B8ED5' : '#EA4E6F',
                         marginLeft: 13,
                       }}>
                       <Text style={{color: '#FFFFFF', textAlign: 'center'}}>
@@ -355,13 +404,28 @@ const Home = ({navigation}) => {
                       </Text>
                     </View>
                     <View style={{marginLeft: 20, flex: 1}}>
-                      <Text numberOfLines={3}>{renderDay?.name}</Text>
+                      <Text style={{color: '#000000'}} numberOfLines={3}>
+                        {renderDay?.name}
+                      </Text>
                     </View>
                   </View>
                 ) : null}
               </>
             );
           })}
+        </View>
+        <View style={{marginTop: vsc(10), marginHorizontal: sc(20)}}>
+          <Text style={{fontWeight: '500', color: '#000000'}}>
+            Note: 'G' (
+            <Text style={{color: '#EA4E6F', fontSize: 14, textAlign: 'center'}}>
+              {'\u2B24'}
+            </Text>
+            ) denotes Gazetted Holiday and 'R' (
+            <Text style={{color: '#2B8ED5', fontSize: 14, textAlign: 'center'}}>
+              {'\u2B24'}
+            </Text>
+            ) denotes Restricted Holiday.
+          </Text>
         </View>
         <View style={{paddingBottom: 40}} />
       </ScrollView>

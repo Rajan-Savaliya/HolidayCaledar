@@ -13,7 +13,7 @@ const DrawerNavigation = () => {
     <>
       <Drawer.Navigator
         drawerStyle={{
-          width: width * 0.8, // 0.001
+          width: width * 0.0, // 0.001
         }}
         drawerContent={props => <CustomDrawerContent {...props} />}>
         <Drawer.Screen name="AppNavigation" component={AppNavigation} />
@@ -21,6 +21,5 @@ const DrawerNavigation = () => {
     </>
   );
 };
-
 
 export default memo(DrawerNavigation);

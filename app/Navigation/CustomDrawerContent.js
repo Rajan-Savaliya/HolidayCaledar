@@ -39,7 +39,7 @@ export default function CustomDrawerContent(props) {
             }}>
             <Image
               source={require('../Assets/calendar.png')}
-              style={{width: sc(25), height: sc(25), tintColor: '#FF851B'}}
+              style={{width: sc(25), height: sc(25), tintColor: '#2B8ED5'}}
             />
             <Text
               style={{
@@ -73,7 +73,7 @@ export default function CustomDrawerContent(props) {
             }}>
             <Image
               source={require('../Assets/feedback.png')}
-              style={{width: sc(25), height: sc(25), tintColor: '#FF851B'}}
+              style={{width: sc(25), height: sc(25), tintColor: '#2B8ED5'}}
             />
             <Text
               style={{
@@ -110,7 +110,7 @@ export default function CustomDrawerContent(props) {
             }}>
             <Image
               source={require('../Assets/share.png')}
-              style={{width: sc(25), height: sc(25), tintColor: '#FF851B'}}
+              style={{width: sc(25), height: sc(25), tintColor: '#2B8ED5'}}
             />
             <Text
               style={{
@@ -148,7 +148,7 @@ export default function CustomDrawerContent(props) {
             }}>
             <Image
               source={require('../Assets/information-button.png')}
-              style={{width: sc(25), height: sc(25), tintColor: '#FF851B'}}
+              style={{width: sc(25), height: sc(25), tintColor: '#2B8ED5'}}
             />
             <Text
               style={{

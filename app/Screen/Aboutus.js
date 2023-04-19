@@ -127,7 +127,7 @@ const Aboutus = ({navigation}) => {
             </Text>
 
             <Text style={{marginTop: sc(30), fontSize: 18}}>
-              PRIVACY POLICY
+              CONTACT E-MAIL
             </Text>
             <Text
               onPress={() => {
@@ -143,25 +143,6 @@ const Aboutus = ({navigation}) => {
             </Text>
           </View>
         </ScrollView>
-      </View>
-      <View
-        style={{
-          paddingTop: vsc(10),
-          backgroundColor: '#FFFFFF',
-          paddingHorizontal: sc(20),
-          paddingVertical: vsc(20),
-        }}>
-        <Text style={{fontWeight: '500', color: '#000000'}}>
-          Note: 'G' (
-          <Text style={{color: '#EA4E6F', fontSize: 14, textAlign: 'center'}}>
-            {'\u2B24'}
-          </Text>
-          ) denotes Gazetted Holiday and 'R' (
-          <Text style={{color: '#2B8ED5', fontSize: 14, textAlign: 'center'}}>
-            {'\u2B24'}
-          </Text>
-          ) denotes Restricted Holiday.
-        </Text>
       </View>
     </>
   );

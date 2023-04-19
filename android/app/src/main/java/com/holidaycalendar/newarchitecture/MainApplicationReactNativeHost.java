@@ -1,4 +1,4 @@
-package com.rnimageslider.newarchitecture;
+package com.calendarwithholidays.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.rnimageslider.BuildConfig;
-import com.rnimageslider.newarchitecture.components.MainComponentsRegistry;
-import com.rnimageslider.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.calendarwithholidays.BuildConfig;
+import com.calendarwithholidays.newarchitecture.components.MainComponentsRegistry;
+import com.calendarwithholidays.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

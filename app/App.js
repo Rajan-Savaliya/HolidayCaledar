@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -9,12 +9,77 @@ import {
   StyleSheet,
   PermissionsAndroid,
   Text,
+  Platform,
 } from 'react-native';
 import AppNavigation from './Navigation';
 import Toast from 'react-native-toast-message';
 import {sc, vsc, msc} from './appConstants/Utils';
+import messaging from '@react-native-firebase/messaging';
 
 const App = () => {
+  useEffect(() => {
+    requestUserPermission();
+    // requestNotificationPermissions();
+  }, []);
+
+  const requestNotificationPermissions = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+          {
+            title: 'Notification Permission',
+            message: 'Allow notification permission',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('notification permission granted');
+        } else {
+          console.log('notification permission denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    messaging()
+      .subscribeToTopic('holiday')
+      .then(() => console.log('Subscribed to topic!'));
+
+    (async () => {
+      await messaging().registerDeviceForRemoteMessages();
+      const token = await messaging().getToken();
+    })();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      // alert('A new FCM message arrived!' + JSON.stringify(remoteMessage));
+    });
+
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in the background!', remoteMessage);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }
+
   return (
     <>
       <AppNavigation />

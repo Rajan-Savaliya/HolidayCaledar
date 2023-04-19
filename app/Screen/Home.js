@@ -9,6 +9,8 @@ import {
   ToastAndroid,
   Dimensions,
   RefreshControl,
+  PermissionsAndroid,
+  Platform,
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import {Calendar} from 'react-native-calendars';
@@ -163,28 +165,6 @@ const Home = ({navigation}) => {
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
       <StatusBar backgroundColor="#3d9970" />
-      {/* <TouchableOpacity
-        onPress={() => {
-          navigation.openDrawer();
-        }}
-        style={{
-          position: 'absolute',
-          zIndex: 11,
-          top: Dimensions.get('window').height - sc(165),
-          right: 20,
-          backgroundColor: '#2B8ED5',
-          width: sc(50),
-          height: sc(50),
-          borderRadius: 100,
-          alignItems: 'center',
-          justifyContent: 'center',
-          elevation: 3,
-        }}>
-        <Image
-          source={require('../Assets/menu.png')}
-          style={{width: 20, height: 20, tintColor: '#FFFFFF'}}
-        />
-      </TouchableOpacity> */}
 
       <Spinner
         visible={loading}
@@ -201,11 +181,7 @@ const Home = ({navigation}) => {
           flexDirection: 'row',
           paddingVertical: 15,
         }}>
-        <View
-          onPress={() => {
-            // navigation.openDrawer();
-          }}
-          style={{marginLeft: 20}}>
+        <View onPress={() => {}} style={{marginLeft: 20}}>
           <Image
             source={require('../Assets/menu.png')}
             style={{width: 20, opacity: 0, height: 20, tintColor: '#FFFFFF'}}
@@ -246,8 +222,6 @@ const Home = ({navigation}) => {
         placeholder={selectedState?.label ?? 'Select state'}
         searchPlaceholder="Search"
         value={selectedState?.value ?? ''}
-        //   onFocus={() => setIsFocus(true)}
-        //   onBlur={() => setIsFocus(false)}
         onChange={item => {
           setSelectedState(item);
           selectedStateRef.current = item;
@@ -262,22 +236,10 @@ const Home = ({navigation}) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         <Calendar
-          // Initially visible month. Default = now
           initialDate={moment().format('YYYY-MM-DD')}
           theme={{
             todayTextColor: '#3d9970',
             arrowColor: '#3d9970',
-            // backgroundColor: '#FFFFFF',
-            // calendarBackground: '#FFFFFF',
-            // textSectionTitleColor: '#FFFFFF',
-            // textSectionTitleDisabledColor: '#3d9970',
-            // selectedDayBackgroundColor: '#00adf5',
-            // selectedDayTextColor: '#FFFFFF',
-            // dayTextColor: '#3d9970',
-            // textDisabledColor: '#3d9970',
-            // dotColor: '#00adf5',
-            // selectedDotColor: '#ffffff',
-            // disabledArrowColor: '#3d9970',
             monthTextColor: 'blue',
             indicatorColor: 'blue',
             textDayFontWeight: '300',
@@ -286,74 +248,44 @@ const Home = ({navigation}) => {
             textDayFontSize: 16,
             textMonthFontSize: 16,
             textDayHeaderFontSize: 16,
-
-            // disabledArrowColor: '#d9e1e8',
           }}
-          // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-          // minDate={'2012-05-10'}
-          // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-          // maxDate={'2012-05-30'}
-          // Handler which gets executed on day press. Default = undefined
           onDayPress={day => {
-            console.log('selected day', day);
             let tempDateFind = daysRenderList.find(
               dateItem =>
                 moment(dateItem?.date).format('DD MMMM YYYY') ===
                 moment(day?.timestamp).format('DD MMMM YYYY'),
-            )
-            let showFestivalText = tempDateFind?.name ?? "";
-
-            Toast.show({
-              text1: `Selected day : ${moment(day?.timestamp).format(
-                'DD MMMM YYYY',
-              )}`,
-              text2: showFestivalText,
-              visibilityTime: 3000,
-              autoHide: true,
-              position: 'top',
-              // type: 'error',
-            });
+            );
+            let showFestivalText = tempDateFind?.name ?? '';
+            if (showFestivalText) {
+              Toast.show({
+                text1: showFestivalText,
+                text2: `Selected day : ${moment(day?.timestamp).format(
+                  'DD MMMM YYYY',
+                )}`,
+                visibilityTime: 3000,
+                autoHide: true,
+                position: 'top',
+              });
+            } else {
+              Toast.show({
+                text1: `Selected day : ${moment(day?.timestamp).format(
+                  'DD MMMM YYYY',
+                )}`,
+                visibilityTime: 3000,
+                autoHide: true,
+                position: 'top',
+              });
+            }
           }}
-          // Handler which gets executed on day long press. Default = undefined
-          onDayLongPress={day => {
-            console.log('selected day', day);
-          }}
-          // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+          onDayLongPress={day => {}}
           monthFormat={'yyyy MM'}
-          // Handler which gets executed when visible month changes in calendar. Default = undefined
           onMonthChange={month => {
-            console.log('month changed', month);
             setRenderCalendarTitle(month.timestamp);
           }}
-          // Hide month navigation arrows. Default = false
-          // hideArrows={true}
-          // Replace default arrows with custom ones (direction can be 'left' or 'right')
-          // renderArrow={direction => <Arrow />}
-          // Do not show days of other months in month page. Default = false
           hideExtraDays={true}
-          // If hideArrows = false and hideExtraDays = false do not switch month when tapping on greyed out
-          // day from another month that is visible in calendar page. Default = false
-          // disableMonthChange={true}
-          // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday
           firstDay={1}
-          // Hide day names. Default = false
-          // hideDayNames={true}
-          // Show week numbers to the left. Default = false
-          // showWeekNumbers={true}
-          // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-          // onPressArrowLeft={subtractMonth => subtractMonth()}
-          // Handler which gets executed when press arrow icon right. It receive a callback can go next month
-          // onPressArrowRight={addMonth => addMonth()}
-          // Disable left arrow. Default = false
-          // disableArrowLeft={true}
-          // Disable right arrow. Default = false
-          // disableArrowRight={true}
-          // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
-          // disableAllTouchEventsForDisabledDays={true}
           markedDates={markDateList}
-          // Replace default month and year title with custom one. the function receive a date as parameter
           renderHeader={date => {
-            console.log(date, 'rgrnsnhsndhnsnh');
             let renderDate = moment(date).format('DD MM YYYY');
             return (
               <Text style={{color: '#000000'}}>
@@ -369,64 +301,69 @@ const Home = ({navigation}) => {
         />
 
         <View style={{marginTop: 20}}>
-          {daysRenderList.map((renderDay, index) => {
-            return (
-              <>
-                {moment(renderCalendarTitle).format('MM YYYY') ==
-                moment(renderDay.date).format('MM YYYY') ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginBottom: 10,
-                      borderColor: '#3d9970',
-                      borderWidth: 1.5,
-                      paddingVertical: 5,
-                      marginHorizontal: 10,
-                      borderRadius: 10,
-                      shadowColor: '#FFFFFF',
-                      // elevation: 1,
-                    }}
-                    key={index}>
+          {Array.isArray(daysRenderList) &&
+            daysRenderList.map((renderDay, index) => {
+              return (
+                <>
+                  {moment(renderCalendarTitle).format('MM YYYY') ==
+                  moment(renderDay.date).format('MM YYYY') ? (
                     <View
+                      key={index}
                       style={{
-                        width: 30,
-                        height: 30,
-                        borderRadius: 30 / 2,
+                        flexDirection: 'row',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor:
-                          renderDay?.type == 'R' ? '#2B8ED5' : '#EA4E6F',
-                        marginLeft: 13,
+                        marginBottom: 10,
+                        borderColor: '#3d9970',
+                        borderWidth: 1.5,
+                        paddingVertical: 5,
+                        marginHorizontal: 10,
+                        borderRadius: 10,
+                        shadowColor: '#FFFFFF',
+                        // elevation: 1,
                       }}>
-                      <Text style={{color: '#FFFFFF', textAlign: 'center'}}>
-                        {moment(renderDay.date).format('D')}
-                      </Text>
+                      <View
+                        style={{
+                          width: 30,
+                          height: 30,
+                          borderRadius: 30 / 2,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor:
+                            renderDay?.type == 'R' ? '#2B8ED5' : '#EA4E6F',
+                          marginLeft: 13,
+                        }}>
+                        <Text style={{color: '#FFFFFF', textAlign: 'center'}}>
+                          {moment(renderDay.date).format('D')}
+                        </Text>
+                      </View>
+                      <View style={{marginLeft: 20, flex: 1}}>
+                        <Text style={{color: '#000000'}} numberOfLines={3}>
+                          {renderDay?.name}
+                        </Text>
+                      </View>
                     </View>
-                    <View style={{marginLeft: 20, flex: 1}}>
-                      <Text style={{color: '#000000'}} numberOfLines={3}>
-                        {renderDay?.name}
-                      </Text>
-                    </View>
-                  </View>
-                ) : null}
-              </>
-            );
-          })}
+                  ) : null}
+                </>
+              );
+            })}
         </View>
-        <View style={{marginTop: vsc(10), marginHorizontal: sc(20)}}>
-          <Text style={{fontWeight: '500', color: '#000000'}}>
-            Note: 'G' (
-            <Text style={{color: '#EA4E6F', fontSize: 14, textAlign: 'center'}}>
-              {'\u2B24'}
+        {Array.isArray(daysRenderList) && daysRenderList.length > 0 ? (
+          <View style={{marginTop: vsc(10), marginHorizontal: sc(20)}}>
+            <Text style={{fontWeight: '500', color: '#000000'}}>
+              Note: 'G' (
+              <Text
+                style={{color: '#EA4E6F', fontSize: 14, textAlign: 'center'}}>
+                {'\u2B24'}
+              </Text>
+              ) denotes Gazetted Holiday and 'R' (
+              <Text
+                style={{color: '#2B8ED5', fontSize: 14, textAlign: 'center'}}>
+                {'\u2B24'}
+              </Text>
+              ) denotes Restricted Holiday.
             </Text>
-            ) denotes Gazetted Holiday and 'R' (
-            <Text style={{color: '#2B8ED5', fontSize: 14, textAlign: 'center'}}>
-              {'\u2B24'}
-            </Text>
-            ) denotes Restricted Holiday.
-          </Text>
-        </View>
+          </View>
+        ) : null}
         <View style={{paddingBottom: 40}} />
       </ScrollView>
     </View>

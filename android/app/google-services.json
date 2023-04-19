@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "810581228874",
+    "project_id": "holiday-calendar-4ecef",
+    "storage_bucket": "holiday-calendar-4ecef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810581228874:android:3b17f7576e6870806e55b3",
+        "android_client_info": {
+          "package_name": "com.calendarwithholidays"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810581228874-up5co9rnfntsmee5o0n478msj05vodm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAzKeHXk81NdmUAxy4ndPyL6pwd0Fjn7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810581228874-up5co9rnfntsmee5o0n478msj05vodm0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810581228874:android:a6a16e454635d1e16e55b3",
+        "android_client_info": {
+          "package_name": "com.holidaycalendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810581228874-up5co9rnfntsmee5o0n478msj05vodm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAzKeHXk81NdmUAxy4ndPyL6pwd0Fjn7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810581228874-up5co9rnfntsmee5o0n478msj05vodm0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

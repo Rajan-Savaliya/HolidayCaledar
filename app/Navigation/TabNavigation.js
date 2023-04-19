@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image, Linking} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Home from '../Screen/Home';
@@ -22,7 +22,7 @@ const TabNavigation = () => {
           justifyContent: 'center',
           alignItems: 'center',
           borderTopWidth: 0.2,
-          borderTopColor: '#3d9970'
+          borderTopColor: '#3d9970',
         }}>
         {state.routes.map((route, index) => {
           const {options} = descriptors[route.key];
@@ -72,7 +72,12 @@ const TabNavigation = () => {
             } else if (label === 'Feedback') {
               return (
                 <TouchableOpacity
-                  onPress={onPress}
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://play.google.com/store/apps/details?id=com.calendarwithholidays',
+                    );
+                    return true;
+                  }}
                   style={{
                     flex: 0.4,
                     justifyContent: 'center',
@@ -93,7 +98,13 @@ const TabNavigation = () => {
             } else if (label === 'Share') {
               return (
                 <TouchableOpacity
-                  onPress={onPress}
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://play.google.com/store/apps/details?id=com.calendarwithholidays',
+                    );
+                    return true;
+
+                  }}
                   style={{
                     flex: 0.4,
                     justifyContent: 'center',

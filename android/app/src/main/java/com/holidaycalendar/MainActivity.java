@@ -1,4 +1,4 @@
-package com.rnimageslider;
+package com.calendarwithholidays;
 import android.os.Bundle; // here
 
 import com.facebook.react.ReactActivity;
@@ -20,7 +20,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "RnImageSlider";
+    return "calendarwithholidays";
   }
 
   /**

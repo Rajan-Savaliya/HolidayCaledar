@@ -20,6 +20,8 @@ import {sc, vsc} from '../appConstants/Utils';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Toast from 'react-native-toast-message';
 
+import AppConstants from '../appConstants/AppConstants';
+
 const Home = ({navigation}) => {
   const [renderCalendarTitle, setRenderCalendarTitle] = useState('');
   const [markDateList, setMarkDateList] = useState({});
@@ -56,10 +58,6 @@ const Home = ({navigation}) => {
       'Authorization',
       'Bearer JzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva',
     );
-    myHeaders.append(
-      'Cookie',
-      'ci_session=5974da4746ca2e7124fabea6dfd3101d6e6c81ff',
-    );
 
     var requestOptions = {
       method: 'GET',
@@ -67,7 +65,7 @@ const Home = ({navigation}) => {
       redirect: 'follow',
     };
 
-    fetch('http://app.ragingdevelopers.com/api/state', requestOptions)
+    fetch(AppConstants.BASE_URL + 'state', requestOptions)
       .then(response => response.json())
       .then(result => {
         let tempList =
@@ -95,10 +93,6 @@ const Home = ({navigation}) => {
       'Authorization',
       'Bearer JzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva',
     );
-    myHeaders.append(
-      'Cookie',
-      'ci_session=5974da4746ca2e7124fabea6dfd3101d6e6c81ff',
-    );
 
     if (selectedStateRef?.current?.id === 0) {
       var requestOptions = {
@@ -119,8 +113,8 @@ const Home = ({navigation}) => {
 
     fetch(
       selectedStateRef?.current?.id === 0
-        ? 'http://app.ragingdevelopers.com/api/holiday'
-        : 'http://app.ragingdevelopers.com/api/stateholiday',
+        ? AppConstants.BASE_URL + 'holiday'
+        : AppConstants.BASE_URL + 'stateholiday',
       requestOptions,
     )
       .then(response => response.json())

@@ -7,7 +7,8 @@ import {
 } from 'react-native';
 
 export default {
-  APP_VERSION: '1.0.0',
+  APP_VERSION: '1.2.0',
+  BASE_URL: 'http://app.ragingdevelopers.com/api/',
   APP_TECHNICAL_ID: 'com.sviragold',
   isiPhoneX: Platform.OS === 'ios' && Dimensions.get('screen').height > 736,
   isSmallDevice: Dimensions.get('screen').height < 630,

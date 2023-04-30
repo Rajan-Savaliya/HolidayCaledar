@@ -19,7 +19,7 @@ import messaging from '@react-native-firebase/messaging';
 const App = () => {
   useEffect(() => {
     requestUserPermission();
-    // requestNotificationPermissions();
+    requestNotificationPermissions();
   }, []);
 
   const requestNotificationPermissions = async () => {
@@ -36,9 +36,7 @@ const App = () => {
           },
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('notification permission granted');
         } else {
-          console.log('notification permission denied');
         }
       } catch (err) {
         console.warn(err);
@@ -62,9 +60,7 @@ const App = () => {
       // alert('A new FCM message arrived!' + JSON.stringify(remoteMessage));
     });
 
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log('Message handled in the background!', remoteMessage);
-    });
+    messaging().setBackgroundMessageHandler(async remoteMessage => {});
 
     return unsubscribe;
   }, []);
@@ -76,7 +72,6 @@ const App = () => {
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
-      console.log('Authorization status:', authStatus);
     }
   }
 

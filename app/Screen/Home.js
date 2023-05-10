@@ -54,10 +54,7 @@ const Home = ({navigation}) => {
 
   const getStatusList = () => {
     var myHeaders = new Headers();
-    myHeaders.append(
-      'Authorization',
-      'Bearer JzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva',
-    );
+    myHeaders.append('Authorization', 'Bearer' + AppConstants.API_TOKEN);
 
     var requestOptions = {
       method: 'GET',
@@ -89,10 +86,7 @@ const Home = ({navigation}) => {
   const getIndiaHolidayList = () => {
     setLoading(true);
     var myHeaders = new Headers();
-    myHeaders.append(
-      'Authorization',
-      'Bearer JzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva',
-    );
+    myHeaders.append('Authorization', 'Bearer' + AppConstants.API_TOKEN);
 
     if (selectedStateRef?.current?.id === 0) {
       var requestOptions = {
